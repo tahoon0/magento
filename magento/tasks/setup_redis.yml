@@ -1,0 +1,7 @@
+---
+- name: Ensure Redis is enabled and running
+  systemd:
+    name: redis-server
+    enabled: yes
+    state: started
+

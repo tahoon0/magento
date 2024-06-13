@@ -1,0 +1,13 @@
+---
+# defaults file for magento
+magento_version: "2.4.2"
+mysql_root_password: "password_123"
+magento_db_name: "magento"
+magento_db_user: "magento_user1"
+magento_db_password: "password_123"
+admin_firstname: "Admin"
+admin_lastname: "User"
+admin_user: "admin"
+admin_password: "password_123"
+domain_name: "magento.test"
+

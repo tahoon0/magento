@@ -1,0 +1,46 @@
+---
+- name: Install Composer
+  shell: |
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+    php -r "unlink('composer-setup.php');"
+  args:
+    creates: /usr/local/bin/composer
+
+- name: Download and install Magento
+  shell: |
+    mkdir -p /var/www/magento
+    composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition={{ magento_version }} /var/www/magento
+  args:
+    chdir: /var/www
+    creates: /var/www/magento
+
+- name: Install Magento
+  shell: |
+    php bin/magento setup:install \
+      --base-url=https://{{ domain_name }}/ \
+      --db-host=localhost \
+      --db-name={{ magento_db_name }} \
+      --db-user={{ magento_db_user }} \
+      --db-password={{ magento_db_password }} \
+      --admin-firstname={{ admin_firstname }} \
+      --admin-lastname={{ admin_lastname }} \
+      --admin-email={{ admin_email }} \
+      --admin-user={{ admin_user }} \
+      --admin-password={{ admin_password }} \
+      --language=en_US \
+      --currency=USD \
+      --timezone=America/Chicago \
+      --use-rewrites=1
+  args:
+    chdir: /var/www/magento
+
+- name: Set correct permissions for Magento
+  shell: |
+    chown -R www-data:www-data /var/www/magento
+    find var generated vendor pub/static pub/media app/etc -type f -exec chmod g+w {} +
+    find var generated vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} +
+    chmod u+x bin/magento
+  args:
+    chdir: /var/www/magento
+

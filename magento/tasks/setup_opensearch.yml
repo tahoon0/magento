@@ -1,0 +1,10 @@
+---
+- name: Download and extract OpenSearch
+  shell: |
+    wget https://artifacts.opensearch.org/releases/bundle/opensearch/2.x.x/opensearch-2.x.x-linux-x64.tar.gz -O /tmp/opensearch.tar.gz
+    mkdir -p /usr/local/opensearch
+    tar -zxf /tmp/opensearch.tar.gz -C /usr/local/opensearch --strip-components=1
+    /usr/local/opensearch/bin/opensearch &
+  args:
+    creates: /usr/local/opensearch/bin/opensearch
+

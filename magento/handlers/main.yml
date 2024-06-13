@@ -1,0 +1,7 @@
+---
+# handlers file for magento
+- name: Reload nginx
+  service:
+    name: nginx
+    state: reloaded
+

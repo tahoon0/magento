@@ -1,0 +1,23 @@
+---
+# tasks file for magento
+- name: Include install packages
+  include_tasks: install_packages.yml
+
+- name: Include setup MySQL
+  include_tasks: setup_mysql.yml
+
+- name: Include setup Redis
+  include_tasks: setup_redis.yml
+
+- name: Include setup OpenSearch
+  include_tasks: setup_opensearch.yml
+
+- name: Include setup SSL
+  include_tasks: setup_ssl.yml
+
+- name: Include setup Magento
+  include_tasks: setup_magento.yml
+
+- name: Include setup Nginx
+  include_tasks: setup_nginx.yml
+

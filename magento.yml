@@ -1,0 +1,7 @@
+---
+- name: Setup Magento 2 Server
+  hosts: localhost
+  become: true
+  roles:
+    - magento
+

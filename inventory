@@ -1,0 +1,5 @@
+[magento]
+'all'
+
+[magento:vars]
+ansible_ssh_user=SHA256:ReMVRFft/BRwrfGP6vYMMgY+jytwIogyd1BL15fgRHw atahoon@DESKTOP-EVU69U0

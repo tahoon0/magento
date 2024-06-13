@@ -1,0 +1,16 @@
+---
+- name: Configure nginx for Magento
+  template:
+    src: nginx_magento.j2
+    dest: /etc/nginx/sites-available/magento
+  notify:
+    - Reload nginx
+
+- name: Enable Magento site
+  file:
+    src: /etc/nginx/sites-available/magento
+    dest: /etc/nginx/sites-enabled/magento
+    state: link
+  notify:
+    - Reload nginx
+

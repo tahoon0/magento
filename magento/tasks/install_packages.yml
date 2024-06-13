@@ -1,0 +1,29 @@
+---
+- name: Update and upgrade apt packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Install required packages
+  apt:
+    name:
+      - nginx
+      - php-fpm
+      - php-mysql
+      - php-curl
+      - php-gd
+      - php-intl
+      - php-soap
+      - php-xml
+      - php-xsl
+      - php-mbstring
+      - php-zip
+      - php-bcmath
+      - php-iconv
+      - mysql-server
+      - redis-server
+      - wget
+      - certbot
+      - python3-certbot-nginx
+    state: present
+

@@ -1,0 +1,6 @@
+---
+- name: Obtain SSL certificate using Let's Encrypt
+  shell: certbot --nginx -d "{{ domain_name }}" --non-interactive --agree-tos --email "{{ certbot_email }}"
+  args:
+    creates: /etc/letsencrypt/live/{{ domain_name }}
+

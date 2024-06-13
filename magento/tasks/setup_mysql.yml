@@ -1,0 +1,44 @@
+- name: Secure MySQL installation
+  mysql_info:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+  register: mysql_info
+
+- name: Remove anonymous users
+  mysql_query:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    query: DELETE FROM mysql.user WHERE User=''
+  when: mysql_info.databases is defined and ansible_distribution == "Ubuntu"
+
+- name: Disallow remote root login
+  mysql_query:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    query: UPDATE mysql.user SET host = 'localhost' WHERE User = 'root' AND host != 'localhost'
+  when: mysql_info.databases is defined and ansible_distribution == "Ubuntu"
+
+- name: Remove test database
+  mysql_db:
+    name: test
+    state: absent
+  when: mysql_info.databases is defined and ansible_distribution == "Ubuntu"
+
+- name: Reload privileges
+  mysql_query:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    query: FLUSH PRIVILEGES
+  when: mysql_info.databases is defined and ansible_distribution == "Ubuntu"
+
+- name: Create MySQL database
+  mysql_db:
+    name: "{{ magento_db_name }}"
+    state: present
+
+- name: Create MySQL user
+  mysql_user:
+    name: "{{ magento_db_user }}"
+    password: "{{ magento_db_password }}"
+    priv: "{{ magento_db_name }}.*:ALL"
+    state: present
